@@ -81,8 +81,8 @@ dfA['Beginning'] = pd.to_datetime(dfA['Beginning'] ,format='%d%m%Y')
 
 ## adds a month if the day is bigger than 1, also works for december --> adds a year 
 ## begins new month in the first day
-dfA['First_Date_Month'] = dfA['date'] + pd.offsets.MonthBegin(1)
-
+dfA.loc[dfA["day"] != 1,'First_Date_Month'] = dfA['date'] + pd.offsets.MonthBegin(1)
+dfA.loc[dfA["day"] == 1,'First_Date_Month'] = dfA['date']
 ## calculates how many months it has been since the start of the current financial year
 dfA['Months_Past'] = ((dfA['Beginning'] - dfA['First_Date_Month'])/np.timedelta64(1, 'M')).astype(int) + 1
 
